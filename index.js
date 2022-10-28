@@ -1,6 +1,6 @@
 const fs = require("fs"); // import nodejs core library
 const rl = require("readline-sync");
-
+const path = require("path");
 while (true) {
   const folderToRead = rl.question(
     "Please provide a path to your subtitle folder...\n(or enter 'STOP' to close) \n"
@@ -16,7 +16,9 @@ while (true) {
     const folderContents = fs.readdirSync(folderToRead);
     let allContent = "";
     for (let i = 0; i < folderContents.length; i++) {
-      allContent += fs.readFileSync(folderToRead + "/" + folderContents[i]);
+      allContent += fs.readFileSync(
+        path.resolve(folderToRead, folderContents[i])
+      );
     }
     allContent = allContent
       .replace(/[^a-z]/gi, " ")
